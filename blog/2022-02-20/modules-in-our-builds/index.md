@@ -1,0 +1,5 @@
+# Modules In Our Builds
+Now that we are seeing progress in supporting C++ Modules we can begin to think in ernest about how to take full advantage of Modules in our build systems. This discussion is important to begin early to help influence the implementations being adopted by the compiler vendors. I will go into some detail about modules, but for a great introduction to the nitty details of how modules are constructed check out [vector-of-bool's blog](https://vector-of-bool.github.io/2019/03/10/modules-1.html).
+
+## Module Units
+Translation units that contain a module declaration are a new concept with C++20 and indicate to the compiler that you are producing a module. It is worth noting that a standard Trnaslation unit that does not declare a module may still consume modules through an import declaration. A module can be devided into two sub-categories: Interface Units, and Implementation Units. The key difference being the presense of an ```export``` keyword attached to the module declaration in an Interface Unit. The interface unit
