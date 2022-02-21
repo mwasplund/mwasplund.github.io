@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Modules In Our Builds"
-categories: Build Modules Soup C++
+categories: Build Modules Soup
 ---
 
 Now that we are seeing progress in supporting C++ Modules we can begin to think in ernest about how to take full advantage of Modules in our build systems. This discussion is important to begin early to help influence the implementations being adopted by the compiler vendors. 
