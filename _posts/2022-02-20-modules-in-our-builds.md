@@ -25,5 +25,11 @@ We can also take advantage of the existing dependency graph between projects to 
 Auto discovery can lead to a more flued developer experience where a group of translation units are compiled as a collection where a preprocessing phase parses the module unit declarations and imports to determine the dynamic dependency graph and builds the translation units in the required order with the required references or the compiler can implement a callback design where it asks the build system to imported modules as they are discovered.
 
 
-
+```mermaid
+  graph TD;
+      A-->B;
+      A-->C;
+      B-->D;
+      C-->D;
+```
 
