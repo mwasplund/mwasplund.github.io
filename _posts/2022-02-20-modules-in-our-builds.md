@@ -15,8 +15,68 @@ A C++ Translation unit that contains a `module` declaration with the optional `e
 ## Discover or Define?
 The question then becomes, do we let our builds discover the implicit ordering for all of the module inter-dependencies or do we explicitly tell the build system the entire dependency graph?
 
+To help illustrate the different approaches imagine 4 simple modules that form a diamond dependency graph. Note: For examples we use the MSVC file extension for Binary Module Interfaces ".ifc".
+```mermaid
+  graph LR;
+      A-->B;
+      A-->C;
+      B-->D;
+      C-->D;
+```
+
+```c++
+import B;
+import C;
+
+int main()
+{
+    B::DoStuff();
+    C::DoStuff();
+    return 0;
+}
+```
+
+```c++
+export module B
+import D;
+
+export namespace B
+{
+    void DoStuff()
+    {
+        D::DoStuff();
+    }
+}
+```
+
+```c++
+export module C
+import D;
+
+export namespace C
+{
+    void DoStuff()
+    {
+        D::DoStuff();
+    }
+}
+```
+
+```c++
+export module D
+
+export namespace D
+{
+    void DoStuff()
+    {
+    }
+}
+```
+
 ### Auto Expansion
 The first approach to handling ordering within a build is to introduce a callback mechanism whereby a compiler can indicate to the build system that it must first build a Module before it can be imported. This allows for existing build systems to ignore the problem up front and continue to compile translation units in "any order". When an import declaration is seen, the compiler will attempt to resolve the module interface file using a pre-defined naming/lookup convention. If it is unable to load the interface it will indicate to the calling build system that it must pause the current build and build the requested module first. The build system would then be responsible to determine which translation unit is required to build a specific module interface file. At this point the build system must either enforce an artificial constraint that a module name must match the file name or pick a random file monitor the outputs to see if the requested interface file was produced. This process is recursively followed until a unit is encountered that can be fully resolved and compiled. Once this top level file finishes the previous units can continue compiling where they left off at the import declarations.
+
+If we work through the above example we would tell the compiler to build A, B, C and D in any order. Lets say that we start with A.cpp. When the compiler encounters the `import B` declaration it will attempt to load B.ifc and fail. It will pause compilation and ask the build system to please compile the B Module. The build system will attempt to compile B.cpp using the naming convention that a file must be the same name as the Module inside. From here the compiler will encounter the `import D` and attempt to load D.ifc. It will fail and again ask the build system to compile the module D. The build system will now successfully compile D.cpp since it has no other module dependencies. The compiler will resume building B.cpp and succeed. The compiler will attempt to finish A.cpp and fail to load C.ifc, which will call back to the build system to ask for the C module. The build system will compile C.cpp, which will succeed in loading the D.ifc file that already exists. The compiler will make a third attempt to finish compiling and will now finish.
 
 Auto expansion allows builds to continue to pretend that there is no order to building translation units, but this quickly falls apart. It also introduces a tight coupling between the build system and the compiler implementation for the callback protocol and the naming convention used. This makes it a limited solution with one compiler and unmanageable with many.
 
@@ -34,13 +94,6 @@ If a build system is designed with the key dependency graph already in place bet
 
 We can also take advantage of the existing dependency graph between projects to automatically incorporate a module dependency too. This is where we can easily mirror a library boundary to have a single interface unit export the symbols that are public to the library. From here the build system can incorporate project references to automatically reference the module interface units for the upstream dependencies when building and link against the library symbols as is done today.
 
-```mermaid
-  graph TD;
-      A-->B;
-      A-->C;
-      B-->D;
-      C-->D;
-```
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.14.0/mermaid.min.js"></script>
 <script>
