@@ -35,11 +35,14 @@ Auto discovery can lead to a more flued developer experience where a group of tr
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.14.0/mermaid.min.js"></script>
 <script>
-  $(document).ready(function () {
-    mermaid.initialize({
-      startOnLoad:true,
-      theme: "default",
-    });
+    const config = {
+        startOnLoad:true,
+        theme: 'default',
+        flowchart: {
+            useMaxWidth:false,
+            htmlLabels:true
+            }
+    };
+    mermaid.initialize(config);
     window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
-  });
 </script>
