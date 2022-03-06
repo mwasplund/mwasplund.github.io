@@ -23,35 +23,29 @@ A Translation Unit is said to have an Interface dependency on a module if it eit
 
 Lets look at a few quick examples to help familiarize ourselves with Module Interface Dependencies:
 
-**ModuleA.cpp** - Has no Interface Dependencies.
+**A.cpp** - Has no Interface Dependencies.
 ```c++
-export module A
+export module ModuleA
 /* Cool Code */
 ```
 
-**ModuleB.cpp** - Has an interface dependency on module **A** from the direct import.
+**B.cpp** - Has an interface dependency on module **ModuleA** from the direct import.
 ```c++
-export module B
-import A;
+export module ModuleB
+import ModuleA;
 /* Declare Stuff */
 ```
 
-**ModuleBImpl.cpp** - Has an implicit interface dependency on module **B** as an Implementation Unit and through that has an inherited Interface Dependency on **A**.
+**BImpl.cpp** - Has an implicit interface dependency on module **ModuleB** as an Implementation Unit and through that has an inherited Interface Dependency on **ModuleA**.
 ```c++
-module B
+module ModuleB
 /* Implement Stuff */
 ```
 
-**Main.cpp** - Has an explicit interface dependency on module **B** as from the import and through that has an inherited Interface Dependency on **A**.
+**Main.cpp** - Has an explicit interface dependency on module **ModuleB** as from the import and through that has an inherited Interface Dependency on **ModuleA**.
 ```c++
-import B;
+import ModuleB;
 /* More Great Code */
-```
-
-```mermaid
-  graph LR;
-      A-->B;
-      B-->Main;
 ```
 
 ## Discover or Define?
@@ -79,10 +73,10 @@ Explicitly defining a dependency graph is straight forward and can support any c
 Recipe.toml
 ```toml
 Source = [
-    { File = "Source/ModuleA.cpp", IsInterface = true },
-    { File = "Source/ModuleB.cpp", IsInterface = true, Imports = [ "Source/ModuleA.cpp" ] },
-    { File = "Source/ModuleBImpl.cpp", IsInterface = false, Imports = [ "Source/ModuleB.cpp" ] },
-    { File = "Source/Main.cpp", IsInterface = false, Imports = [ "Source/ModuleB.cpp" ] },
+    { File = "Source/A.cpp", IsInterface = true },
+    { File = "Source/B.cpp", IsInterface = true, Imports = [ "Source/A.cpp" ] },
+    { File = "Source/BImpl.cpp", IsInterface = false, Imports = [ "Source/B.cpp" ] },
+    { File = "Source/Main.cpp", IsInterface = false, Imports = [ "Source/B.cpp" ] },
 ]
 ```
 
@@ -92,16 +86,16 @@ It is also advantageous at this stage to enforce a naming convention that requir
 
 ModuleA/Recipe.toml
 ```toml
-Name = "A"
-Interface = "Source/ModuleA.cpp",
+Name = "ModuleA"
+Interface = "Source/A.cpp",
 ```
 
 ModuleB/Recipe.toml
 ```toml
-Name = "B"
-Interface = "Source/ModuleB.cpp",
+Name = "ModuleB"
+Interface = "Source/B.cpp",
 Source = [
-    "Source/ModuleBImpl.cpp",
+    "Source/BImpl.cpp",
 ]
 [Dependencies]
 Runtime = [
