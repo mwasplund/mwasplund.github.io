@@ -70,7 +70,7 @@ Because of the ability to dynamically adapt to Translation Unit internals withou
 ### Declare
 Explicitly defining a dependency graph is straight forward and can support any combination of imports and exports with the extra cost of maintenance. The main downside being it is hard to maintain and often requires telling the build system the information that is already contained in the source files themselves.
 
-Recipe.toml
+**Recipe.toml**
 ```toml
 Source = [
     { File = "Source/A.cpp", IsInterface = true },
@@ -84,13 +84,13 @@ However, if a build system is designed with the key dependency graph already in 
 
 It is also advantageous at this stage to enforce a naming convention that requires a project name to match the internal module that will be exported. While we could conceivable allow for any module name, and rely on the individual project authors to coordinate their names, it will become impossible to manage as module usage proliferates. It is my goal that Modules can facilitate the adoption of a true package manager which will inevitable lead to collisions between name ownership within named modules.
 
-ModuleA/Recipe.toml
+**ModuleA/Recipe.toml**
 ```toml
 Name = "ModuleA"
 Interface = "Source/A.cpp",
 ```
 
-ModuleB/Recipe.toml
+**ModuleB/Recipe.toml**
 ```toml
 Name = "ModuleB"
 Interface = "Source/B.cpp",
@@ -103,7 +103,7 @@ Runtime = [
 ]
 ```
 
-Main/Recipe.toml
+**Main/Recipe.toml**
 ```toml
 Name = "MyApplication"
 Source = [
