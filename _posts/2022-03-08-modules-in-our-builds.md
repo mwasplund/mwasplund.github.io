@@ -68,7 +68,9 @@ This approach to building Modules has the benefit that it allows for a build sys
 Because of the ability to dynamically adapt to Translation Unit internals without needing to repeat yourself within the build definition, but because there will be extra processing overhead and increased incremental build complexity I believe this type of system will be very useful in locally scoped subsections of a build. For instance, a preprocessor may be able to determine the entire interdependency graph for a single named module and all of its internal partition and implementation units.
 
 ### Declare
-Explicitly defining a dependency graph is straight forward and can support any combination of imports and exports with the extra cost of maintenance. The main downside being it is hard to maintain and often requires telling the build system the information that is already contained in the source files themselves.
+The final way to deduce the dependency graph within module interfaces is to simply tell the build system what it is. Explicitly defining a dependency graph is straight forward and can support any combination of imports and exports. The main downside being it is hard to maintain and often requires telling the build system the information that is already contained in the source files themselves.
+
+For example you could imagine a build system that allows you to configure your source list with a set of Imports to indicate the Translation Unit dependencies which are assumed to map to the Interface Dependencies.
 
 **Recipe.toml**
 ```toml
@@ -80,9 +82,10 @@ Source = [
 ]
 ```
 
-However, if a build system is designed with the key dependency graph already in place between project references then it is a simple matter of mapping project structures to modules. We can take advantage of the existing dependency graph between projects to automatically incorporate module interface dependencies. This is where we can easily mirror a library boundary to have a single interface unit export the symbols that are public to the library. From here the build system can incorporate project references to automatically reference the module interface units for the upstream dependencies when building and link against the library symbols as is done today.
+#### Existing Dependencies
+If a build system is designed with a dependency graph already in place between project references then it is a simple matter of mapping project structures to modules. We can take advantage of the existing dependency graph between projects to automatically incorporate module Interface Dependencies. This is where we can mirror a library boundary to have a single interface unit export the symbols that are public to the library. From here the build system can incorporate project references to automatically reference the module interface units for the upstream dependencies when building and link against the library symbols as is done today.
 
-It is also advantageous at this stage to enforce a naming convention that requires a project name to match the internal module that will be exported. While we could conceivable allow for any module name, and rely on the individual project authors to coordinate their names, it will become impossible to manage as module usage proliferates. It is my goal that Modules can facilitate the adoption of a true package manager which will inevitable lead to collisions between name ownership within named modules.
+It is also advantageous at this stage to enforce a naming convention that requires a project name to match the internal module that will be exported. While we could conceivable allow for any module name, and rely on the individual project authors to coordinate their names, it will become impossible to manage as module usage proliferates. Modules can facilitate the adoption of a package manager which will inevitable lead to collisions between name ownership within named modules.
 
 **ModuleA/Recipe.toml**
 ```toml
@@ -115,16 +118,7 @@ Runtime = [
 ]
 ```
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.14.0/mermaid.min.js"></script>
-<script>
-    const config = {
-        startOnLoad:true,
-        theme: 'default',
-        flowchart: {
-            useMaxWidth:false,
-            htmlLabels:true
-            }
-    };
-    mermaid.initialize(config);
-    window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
-</script>
+## Summary
+Modules aim to solve inherent issues within the C Preprocessor and streamline sharing symbol definitions within C++. It also introduces a new ordering and dependency problem that will require extra work from our build systems. I believe that by leveraging existing dependency structure within our project references we can build a top level Interface Dependency graph for named modules. This can be augmented with a preprocessor or explicit definitions of Partition dependencies to build up the internal structure implementation of a library/module combination.
+
+For a look into how this can work in practice please check out [my open source build system](https://github.com/SoupBuild/Soup) that adopts this design.
