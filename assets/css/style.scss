@@ -1,7 +1,16 @@
 ---
 ---
 
-$header-bg-color: #992415;
-$header-bg-color-secondary: #996415;
+// Palette
+// #F76E11
+// #FF9F45
+// #FFBC80
+// #FC4F4F
+
+
+$header-bg-color: #F76E11;
+$header-bg-color-secondary: #FFBC80;
+
+$section-headings-color: #FC4F4F !default;
 
 @import "{{ site.theme }}";
