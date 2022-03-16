@@ -4,6 +4,7 @@ title: "A New Way to Build and Collaborate"
 tags: Build Modules Soup C++
 category: blog
 ---
+# A New Way to Build and Collaborate
 
 You may already be skeptical - "Why do we need yet another competing solution for building our code?". The concern that this would further fragment our community is valid. I have spent a majority of my career as a software engineer advocating to not reinvent what can instead be borrowed and extended from others. This has made the process of presenting my ideas for this project a challenge. At first glance, it seems like the former is a direct contradiction to the latter. However, I believe we are at a pivotal time in the history of C++ that makes this the perfect time to transition to a new system. I think you will find that these ideas presented have the possibility to create a solution that will resolve many issues plaguing our community today, with minimal impact to existing code.
 

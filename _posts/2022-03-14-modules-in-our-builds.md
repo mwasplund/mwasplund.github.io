@@ -4,6 +4,7 @@ title: "Modules In Our Builds"
 tags: build c++ modules soup
 category: blog
 ---
+# Modules In Our Builds
 
 ## Introduction
 Historically, Translation Units have had the unique ability to be compiled in any order, irregardless of their dependencies. This was made possible by the preprocessor which included header files containing the shared symbol declarations of both the producer and consumer Translation Units. While this has simplified build definitions and allowed for easy parallelization, it also increased overall build times, incremental build scope, and has led to fragile builds with deep interconnected dependencies.
