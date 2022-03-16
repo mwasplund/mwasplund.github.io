@@ -7,7 +7,8 @@ category: blog
 
 ## Introduction
 Historically, Translation Units have had the unique ability to be compiled in any order, irregardless of their dependencies. This was made possible by the preprocessor which included header files containing the shared symbol declarations of both the producer and consumer Translation Units. While this has simplified build definitions and allowed for easy parallelization, it also increased overall build times, incremental build scope, and has led to fragile builds with deep interconnected dependencies.
-With the introduction of C++20, Modules aims to resolve a lot of the shortcomings of the C preprocessor when managing shared symbols, and also introduce an extra level of complexity when tracking Interface dependencies between Translation Units. Discussing how we wish to generate and consume Modules in our builds is critical to understanding requirements and influencing compiler vendors as they converge on a unified solution.
+
+With the introduction of C++20, Modules aims to resolve a lot of the shortcomings of the C preprocessor when managing shared symbols, and also introduce an extra level of complexity when tracking Interface dependencies between Translation Units. Discussing how we wish to generate and consume Modules in our builds is critical to understanding requirements and influencing compiler vendors as they converge on a unified solution. To prove out the design outlined in this post I am actively working on the Open Source build system [**Soup**](https://github.com/SoupBuild/Soup). 
 
 ## Interface Dependencies
 Although I provide some details about module dependencies through their interfaces, if you'd like a more thorough introduction of how modules work, check out [vector-of-bool's blog](https://vector-of-bool.github.io/2019/03/10/modules-1.html). (There are a few discrepancies in this article on Module Implementation Units; still, it's a great place to start learning about Modules.)
@@ -130,4 +131,4 @@ Runtime = [
 ## Summary
 Modules aim to solve inherent limitations within the C Preprocessor and streamline sharing symbol definitions within C++. It also introduces a new ordering and dependency problem that will require extra work from our build systems. By leveraging existing dependency structure within our project references we can build a top-level Interface Dependency graph for named modules. This can be augmented with a preprocessor or explicit definitions of Partition dependencies to build up the internal structure of a library/module combination.
 
-For a working example of this design, check out my Open Source build system [Soup](https://github.com/SoupBuild/Soup).
+For a working example of this design, check out [**Soup**](https://github.com/SoupBuild/Soup)!
