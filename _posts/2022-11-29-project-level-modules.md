@@ -35,7 +35,7 @@ As a Library Author it is entirely up to personal preference whether to continue
 	```
 
 For a full changeset, take a look at the comparison of my [forked branch](https://github.com/dropbox/json11/compare/master...mwasplund:json11:master). Note that extra care was taken to ensure the code can compile continue to function using legacy header includes as well as a module interface.
-Once the project is built as a Soup Package with no local dependencies it can be published to the public feed. This will generate an archive of the source files and Recipe definition which is all that is required to build the project on any system that has Soup installed.
+Once the project is built as a Soup Package with no local dependencies it can be [published](https://github.com/SoupBuild/Soup/blob/main/Docs/CLI/Publish.md) to the public feed. This will generate an archive of the source files and Recipe definition which is all that is required to build the project on any system that has Soup installed.
 ```console
 soup publish
 ```
@@ -52,7 +52,7 @@ Source: [
   "Main.cpp"
 ]
 ```
-The json11 package can now be consumed by including it in the set of dependencies from the Recipe. This can be accomplished by either manually editing the Recipe declaration to include the Runtime Dependency directly. Otherwise the Soup CLI includes a handy `install` command that will discover the latest version in the registry.
+The json11 package can now be consumed by including it in the set of dependencies from the Recipe. This can be accomplished by either manually editing the Recipe declaration to include the Runtime Dependency directly. Otherwise the Soup CLI includes a handy [install](https://github.com/SoupBuild/Soup/blob/main/Docs/CLI/Install.md) command that will discover the latest version in the registry.
 ```console
 soup install json11
 ```
