@@ -34,7 +34,7 @@ As a Library Author it is entirely up to personal preference whether to continue
 	Interface: "json11.cpp"
 	```
 
-For a full delta take a look at the comparison of my forked branch to the original master: https://github.com/dropbox/json11/compare/master...mwasplund:json11:master . Note that extra care was taken to ensure the code can compile continue to function using legacy header includes as well as a module interface.
+For a full changeset, take a look at the comparison of my [forked branch](https://github.com/dropbox/json11/compare/master...mwasplund:json11:master). Note that extra care was taken to ensure the code can compile continue to function using legacy header includes as well as a module interface.
 Once the project is built as a Soup Package with no local dependencies it can be published to the public feed. This will generate an archive of the source files and Recipe definition which is all that is required to build the project on any system that has Soup installed.
 ```console
 soup publish
@@ -91,7 +91,7 @@ int main()
   return 0;
 }
 ```
-A full working example can be found in the samples of the Soup Build Project: https://github.com/SoupBuild/Soup/tree/main/Samples/Cpp/ParseJsonFile
+A full working example can be found in the [Soup Build Samples](https://github.com/SoupBuild/Soup/tree/main/Samples/Cpp/ParseJsonFile).
 
 ### Summary
 
