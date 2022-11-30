@@ -13,7 +13,7 @@ To that end, I have been working on a [build system](https://github.com/SoupBuil
 
 ### Library Author
 
-Let us consider the popular, although recently archived, json11 project. This project is a great test case since it is relatively simple but is not a header only library, and everyone needs to parse a Json file or two at some point in their career. The library itself consists of a single header file and a single source file which take very little effort to convert into a Public Module Interface.
+Let us consider the popular, although recently archived, [json11](https://github.com/dropbox/json11) project. This project is a great test case since it is relatively simple but is not a header only library, and everyone needs to parse a Json file or two at some point in their career. The library itself consists of a single header file and a single source file which take very little effort to convert into a Public Module Interface.
 
 As a Library Author it is entirely up to personal preference whether to continue to utilize header-based declarations within the library or entirely migrate to a design that relies on Module Partition Units to build up the core functionality. To keep this discussion as simple as possible, I will perform the minimal number of changes to convert the existing project over to export a single Module Interface. This is accomplished by:
 1. Adding a public named module declaration to the single translation unit **json11.cpp**.
