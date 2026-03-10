@@ -7,7 +7,7 @@ category: blog
 
 ## Editor Note: Bad Assumptions :)
 
-I was wrong in my assumption that the global module fragment can only contain preprocessor directives implied that they cannot wrap around imports or export declarations. This invalidates my arguments for a simple scanner parser, and means we will need to rely on the compilers to do this for us. I will leave this post up as a "hypothetical" for if we could limit the preprocessor to not span `import` or `export` declarations on how simple we could have had it.
+I was wrong in my assumption that the global module fragment can only contain preprocessor directives implied that they cannot wrap around imports or export declarations. This invalidates my arguments for a simple scanner parser, and means we will need to rely on the compilers to do this for us. I will leave this post up as a the core premise is still valid, but the implementation is not as simply as outlined.
 
 ## Dynamic Modules
 
