@@ -5,6 +5,10 @@ tags: build c++ modules soup
 category: blog
 ---
 
+## Editor Note: Bad Assumptions :)
+
+I was wrong in my assumption that the global module fragment can only contain preprocessor directives implied that they cannot wrap around imports or export declarations. This invalidates my arguments for a simple scanner parser, and means we will need to rely on the compilers to do this for us. I will leave this post up as a "hypothetical" for if we could limit the preprocessor to not span `import` or `export` declarations on how simple we could have had it.
+
 ## Dynamic Modules
 
 This is the third installment of my series [blog posts](https://mwasplund.github.io/blog/2022/03/14/modules-in-our-builds) outlining the three ways in which Modules can be integrated into C++ builds. For the first time in C++ history, Modules introduce a dependency hierarchy and implicit order to our builds. The order can be determined through dynamic expansion during build evaluation, by explicitly declaring the interface dependencies, or by running a preprocessing phase to dynamically detect dependencies. In the [second post](https://mwasplund.github.io/blog/2022/11/29/project-level-modules) I outlined how we can leverage the structure already present in the build system itself to generate a dependency graph between modules at the library level. In this post, I dive into the internal process of scanning translation units to dynamically discover the dependencies between named modules and their internal partitions.
